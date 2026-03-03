@@ -7,6 +7,10 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+
+ public AudioSource coinAudio;
+ public GameObject explosionPrefab;
+
  // Rigidbody of the player.
  private Rigidbody rb; 
  private int count;
@@ -66,8 +70,14 @@ public class PlayerController : MonoBehaviour
        {
          if (other.gameObject.CompareTag("PickUp")) 
          {
+            // Deactivate the collided object (making it disapear).
             other.gameObject.SetActive(false);
-            count = count + 1;
+            // Show Particle Effect
+            GameObject myPrefab = Instantiate(explosionPrefab);
+            myPrefab.transform.position = other.transform.position;
+            
+            // Play Sound Effect
+            coinAudio.Play();
 
             SetCountText();
          }
